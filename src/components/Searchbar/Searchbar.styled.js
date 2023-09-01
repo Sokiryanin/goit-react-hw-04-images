@@ -59,6 +59,7 @@ export const SearchFormBtnLabel = styled.span`
   white-space: nowrap;
   clip-path: inset(50%);
   border: 0;
+  color: black;
 `;
 
 export const SearchFormInput = styled.input`

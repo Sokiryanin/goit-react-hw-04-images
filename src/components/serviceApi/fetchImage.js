@@ -7,6 +7,6 @@ export const fetchImages = async (query, page) => {
   const response = await axios.get(
     `?key=${API_KEY}&q=${query}&page${page}&per_page=12&image_type=photo`
   );
-  console.log(response);
+
   return response.data.hits;
 };

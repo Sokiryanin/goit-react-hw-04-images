@@ -5,6 +5,9 @@ import { Button } from '../Button/Button';
 import { Container } from './App.styled';
 import { fetchImages } from 'components/serviceApi/fetchImage';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 export default class App extends Component {
   state = {
     query: '',
@@ -22,6 +25,13 @@ export default class App extends Component {
       try {
         this.setState({ loading: true, error: false });
         const imagesNew = await fetchImages(this.state.query, this.state.page);
+        // console.log(imagesNew.length);
+
+        if (imagesNew.length === 0) {
+          return toast.info('Sorry image not found...', {
+            position: toast.POSITION.BOTTOM_LEFT,
+          });
+        }
 
         this.setState(({ images }) => {
           return {
@@ -60,7 +70,10 @@ export default class App extends Component {
           <ImageGallery images={this.state.images} />
         )}
 
-        <Button onClick={this.handleLoadMore} />
+        {this.state.images.length > 0 && (
+          <Button onClick={this.handleLoadMore} />
+        )}
+        <ToastContainer />
       </Container>
     );
   }
