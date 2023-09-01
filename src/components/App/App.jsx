@@ -23,9 +23,9 @@ export default class App extends Component {
     if (prevState.query !== query || prevState.page !== page) {
       try {
         this.setState({ loading: true, error: false });
-        const imagesNew = await fetchImages(query, page);
+        const getImages = await fetchImages(query, page);
 
-        if (imagesNew.length === 0) {
+        if (getImages.length === 0) {
           return toast.info('Sorry image not found...', {
             position: toast.POSITION.BOTTOM_LEFT,
           });
@@ -33,7 +33,7 @@ export default class App extends Component {
 
         this.setState(({ images }) => {
           return {
-            images: [...images, ...imagesNew],
+            images: [...images, ...getImages],
           };
         });
       } catch (error) {
