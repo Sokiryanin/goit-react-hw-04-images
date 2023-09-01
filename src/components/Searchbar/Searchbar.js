@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { FcSearch } from 'react-icons/fc';
 
 import {
   Header,
@@ -30,7 +31,9 @@ export class Searchbar extends Component {
       <Header>
         <SearchForm onSubmit={this.handleSubmit}>
           <SearchFormBtn type="submit">
-            <SearchFormBtnLabel>Search</SearchFormBtnLabel>
+            <SearchFormBtnLabel>
+              <FcSearch size="25" />
+            </SearchFormBtnLabel>
           </SearchFormBtn>
 
           <SearchFormInput

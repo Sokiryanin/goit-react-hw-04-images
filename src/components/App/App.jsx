@@ -3,6 +3,7 @@ import { Searchbar } from '../Searchbar/Searchbar';
 import { ImageGallery } from '../ImageGallery/ImageGallery';
 import { Button } from '../Button/Button';
 import { Container } from './App.styled';
+import { Loader } from 'components/Loader/Loader';
 import { fetchImages } from 'components/serviceApi/fetchImage';
 
 import { ToastContainer, toast } from 'react-toastify';
@@ -17,15 +18,12 @@ export default class App extends Component {
     error: false,
   };
 
-  async componentDidUpdate(prevProps, prevState) {
-    if (
-      prevState.query !== this.state.query ||
-      prevState.page !== this.state.page
-    ) {
+  async componentDidUpdate(_, prevState) {
+    const { page, query } = this.state;
+    if (prevState.query !== query || prevState.page !== page) {
       try {
         this.setState({ loading: true, error: false });
-        const imagesNew = await fetchImages(this.state.query, this.state.page);
-        // console.log(imagesNew.length);
+        const imagesNew = await fetchImages(query, page);
 
         if (imagesNew.length === 0) {
           return toast.info('Sorry image not found...', {
@@ -53,8 +51,6 @@ export default class App extends Component {
   };
 
   handleSubmitSearch = query => {
-    console.log(query);
-
     this.setState({
       query,
       images: [],
@@ -66,10 +62,10 @@ export default class App extends Component {
     return (
       <Container>
         <Searchbar onSubmit={this.handleSubmitSearch} />
+        {this.state.loading && <Loader />}
         {this.state.images.length > 0 && (
           <ImageGallery images={this.state.images} />
         )}
-
         {this.state.images.length > 0 && (
           <Button onClick={this.handleLoadMore} />
         )}
