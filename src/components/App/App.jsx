@@ -10,7 +10,8 @@ export default class App extends Component {
     query: '',
     images: [],
     page: 1,
-    isLoading: false,
+    loading: false,
+    error: false,
   };
 
   async componentDidUpdate(prevProps, prevState) {
@@ -19,17 +20,18 @@ export default class App extends Component {
       prevState.page !== this.state.page
     ) {
       try {
-        this.setState({ isLoading: true });
+        this.setState({ loading: true, error: false });
         const imagesNew = await fetchImages(this.state.query, this.state.page);
+
         this.setState(({ images }) => {
           return {
             images: [...images, ...imagesNew],
           };
         });
       } catch (error) {
-        console.log(error);
+        this.setState({ error: true });
       } finally {
-        this.setState({ isLoading: false });
+        this.setState({ loading: false });
       }
     }
   }
@@ -41,6 +43,8 @@ export default class App extends Component {
   };
 
   handleSubmitSearch = query => {
+    console.log(query);
+
     this.setState({
       query,
       images: [],
@@ -52,7 +56,10 @@ export default class App extends Component {
     return (
       <Container>
         <Searchbar onSubmit={this.handleSubmitSearch} />
-        <ImageGallery />
+        {this.state.images.length > 0 && (
+          <ImageGallery images={this.state.images} />
+        )}
+
         <Button onClick={this.handleLoadMore} />
       </Container>
     );
