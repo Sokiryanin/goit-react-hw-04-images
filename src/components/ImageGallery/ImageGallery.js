@@ -1,5 +1,6 @@
 import { Gallery } from './ImageGallery.styled';
 import { ImageGalleryItem } from '../ImageGalleryItem/ImageGalleryItem';
+import Modal from 'components/Modal';
 
 export const ImageGallery = ({ images }) => {
   return (
@@ -8,8 +9,8 @@ export const ImageGallery = ({ images }) => {
         <ImageGalleryItem
           key={image.id}
           webformatURL={image.webformatURL}
-          largeImageURL={image.largeImageURL}
           tag={image.tags}
+          largeImageURL={image.largeImageURL}
         />
       ))}
     </Gallery>
