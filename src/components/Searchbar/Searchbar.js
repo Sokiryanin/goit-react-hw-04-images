@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { useState } from 'react';
 import { FcSearch } from 'react-icons/fc';
 
 import {
@@ -9,44 +9,40 @@ import {
   SearchFormInput,
 } from './Searchbar.styled';
 
-export class Searchbar extends Component {
-  state = {
-    query: '',
-  };
+function Searchbar({ onSubmit }) {
+  const [query, setQuery] = useState('');
 
-  handleSubmit = evt => {
+  const handleSubmit = evt => {
     evt.preventDefault();
-    this.props.onSubmit(this.state.query);
-    this.setState({ query: '' });
+
+    onSubmit(query);
   };
 
-  handleChange = evt => {
-    this.setState({
-      [evt.target.name]: evt.target.value,
-    });
+  const handleChange = evt => {
+    setQuery(evt.currentTarget.value);
   };
 
-  render() {
-    return (
-      <Header>
-        <SearchForm onSubmit={this.handleSubmit}>
-          <SearchFormBtn type="submit">
-            <SearchFormBtnLabel>
-              <FcSearch size="25" />
-            </SearchFormBtnLabel>
-          </SearchFormBtn>
+  return (
+    <Header>
+      <SearchForm onSubmit={handleSubmit}>
+        <SearchFormBtn type="submit">
+          <SearchFormBtnLabel>
+            <FcSearch size="25" />
+          </SearchFormBtnLabel>
+        </SearchFormBtn>
 
-          <SearchFormInput
-            onChange={this.handleChange}
-            value={this.state.query}
-            type="text"
-            name="query"
-            autoComplete="off"
-            autoFocus
-            placeholder="Search images and photos"
-          />
-        </SearchForm>
-      </Header>
-    );
-  }
+        <SearchFormInput
+          onChange={handleChange}
+          value={query}
+          type="text"
+          name="query"
+          autoComplete="off"
+          autoFocus
+          placeholder="Search images and photos"
+        />
+      </SearchForm>
+    </Header>
+  );
 }
+
+export default Searchbar;
