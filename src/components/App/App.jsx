@@ -4,7 +4,7 @@ import { ImageGallery } from '../ImageGallery/ImageGallery';
 import { Button } from '../Button/Button';
 import { Container } from './App.styled';
 import { Loader } from 'components/Loader/Loader';
-import { fetchImages } from 'components/serviceApi/fetchImage';
+import { fetchImages } from 'serviceApi/fetchImage';
 
 import toast, { Toaster } from 'react-hot-toast';
 
